@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<GridPane alignment="center" hgap="10" style="-fx-background-color: #000000;" vgap="10" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Tanks.mainController">
+
+   <ImageView GridPane.columnIndex="0" GridPane.rowIndex="0">
+      <image>
+         <Image url="@images/mainTank.png" />
+      </image>
+   </ImageView>
+
+   <Text fx:id="titleText" fill="WHITE" style="-fx-font-weight: bold;" text="Tanks" GridPane.columnIndex="0" GridPane.rowIndex="1">
+      <font>
+         <Font size="36.0" />
+      </font>
+      <GridPane.margin>
+         <Insets left="10.0" />
+      </GridPane.margin></Text>
+   <Text id="authorsText" fill="WHITE" text="by Bartosz Kubacki &amp; Bartłomiej Urbanek" GridPane.columnIndex="0" GridPane.rowIndex="2">
+      <GridPane.margin>
+         <Insets left="10.0" />
+      </GridPane.margin></Text>
+
+   <Button id="newGameButton" mnemonicParsing="false" onAction="#handleNewGameButton" text="New Game" GridPane.columnIndex="2" GridPane.rowIndex="8" />
+   <Button id="joinGameButton" mnemonicParsing="false" onAction="#handleJoinGameButton" text="Join Game" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+   <Button fx:id="exitGameButton" mnemonicParsing="false" onAction="#handleExitGameButton" text="Exit Game" GridPane.columnIndex="0" GridPane.rowIndex="8" />
+   <columnConstraints>
+      <ColumnConstraints />
+      <ColumnConstraints />
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+   </rowConstraints>
+
+</GridPane>

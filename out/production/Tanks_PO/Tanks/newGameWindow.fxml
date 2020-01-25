@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="550.0" prefWidth="800.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Tanks.newGameController">
+
+    <Label layoutX="14.0" layoutY="14.0" style="-fx-font-weight: bold;" text="New Game" textFill="WHITE">
+      <font>
+         <Font size="48.0" />
+      </font>
+    </Label>
+
+    <Label layoutX="14.0" layoutY="118.0" text="Choose your tank:" textFill="WHITE">
+      <font>
+         <Font size="24.0" />
+      </font>
+    </Label>
+    
+   <BorderPane fx:id="imageTankBorder01" layoutX="245.0" layoutY="103.0" prefHeight="64.0" prefWidth="84.0" />
+    <ImageView fx:id="imageTank01" fitHeight="60.0" fitWidth="80.0" layoutX="247.0" layoutY="105.0" onMouseClicked="#chooseTank">
+        <image>
+            <Image url="@images/TANK01.PNG" />
+        </image>
+    </ImageView>
+
+    <BorderPane fx:id="imageTankBorder02" layoutX="358.0" layoutY="103.0" prefHeight="64.0" prefWidth="84.0" />
+    <ImageView fx:id="imageTank02" fitHeight="60.0" fitWidth="80.0" layoutX="360.0" layoutY="105.0" onMouseClicked="#chooseTank">
+        <image>
+            <Image url="@images/TANK02.PNG" />
+        </image>
+    </ImageView>
+
+    <BorderPane fx:id="imageTankBorder03" layoutX="472.0" layoutY="103.0" prefHeight="64.0" prefWidth="84.0" />
+    <ImageView fx:id="imageTank03" fitHeight="60.0" fitWidth="80.0" layoutX="474.0" layoutY="105.0" onMouseClicked="#chooseTank">
+        <image>
+            <Image url="@images/TANK03.PNG" />
+        </image>
+    </ImageView>
+
+    <BorderPane fx:id="imageTankBorder04" layoutX="583.0" layoutY="103.0" prefHeight="64.0" prefWidth="84.0" />
+        <ImageView fx:id="imageTank04" fitHeight="60.0" fitWidth="80.0" layoutX="585.0" layoutY="105.0" onMouseClicked="#chooseTank">
+            <image>
+                <Image url="@images/TANK04.PNG" />
+            </image>
+        </ImageView>
+
+    <Label layoutX="14.0" layoutY="206.0" text="Enter your nickname:" textFill="WHITE">
+      <font>
+         <Font size="18.0" />
+      </font></Label>
+   <TextField fx:id="usernameInput" layoutX="317.0" layoutY="207.0" prefHeight="25.0" prefWidth="255.0" />
+
+    <Label layoutX="14.0" layoutY="256.0" text="Enter room name:" textFill="WHITE">
+        <font>
+            <Font size="18.0" />
+        </font></Label>
+    <TextField fx:id="roomInput" layoutX="317.0" layoutY="257.0" prefHeight="25.0" prefWidth="255.0" />
+
+    <Label layoutX="14.0" layoutY="306.0" text="Enter room password (optional):" textFill="WHITE">
+        <font>
+            <Font size="18.0" />
+        </font></Label>
+    <TextField fx:id="passwordInput" layoutX="317.0" layoutY="307.0" prefHeight="25.0" prefWidth="255.0" />
+
+   <Button fx:id="newGameButton" layoutX="308.0" layoutY="396.0" mnemonicParsing="false" onAction="#handleStartButton" prefHeight="93.0" prefWidth="273.0" style="-fx-font-weight: bold;" text="START !">
+      <font>
+         <Font size="36.0" />
+      </font>
+   </Button>
+
+</AnchorPane>

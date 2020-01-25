@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<SplitPane dividerPositions="0.2744360902255639" prefHeight="550.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Tanks.lobbyWindowController">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+         <children>
+            <Label layoutX="92.0" layoutY="14.0" text="Lobby" />
+            <ListView fx:id="lobbyListView" layoutX="24.0" layoutY="41.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="252.0" prefWidth="168.0" />
+         </children></AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+         <children>
+            <Button fx:id="lobbyStartGame" onAction="#handleLobbyStartButton" layoutX="180.0" layoutY="231.0" mnemonicParsing="false" prefHeight="86.0" prefWidth="216.0" text="START GAME" />
+         </children></AnchorPane>
+        </items>
+</SplitPane>

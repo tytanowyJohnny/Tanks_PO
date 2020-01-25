@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_tanks_po" default="compile.module.tanks_po">
+  <dirname property="module.tanks_po.basedir" file="${ant.file.module_tanks_po}"/>
+  
+  <property name="module.jdk.home.tanks_po" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.tanks_po" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.tanks_po" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.tanks_po" value="-encoding UTF-8 -source 11 -target 11 ${compiler.args}"/>
+  
+  <property name="tanks_po.output.dir" value="${module.tanks_po.basedir}/out/production/Tanks_PO"/>
+  <property name="tanks_po.testoutput.dir" value="${module.tanks_po.basedir}/out/test/Tanks_PO"/>
+  
+  <path id="tanks_po.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="tanks_po.module.production.classpath">
+    <path refid="${module.jdk.classpath.tanks_po}"/>
+  </path>
+  
+  <path id="tanks_po.runtime.production.module.classpath">
+    <pathelement location="${tanks_po.output.dir}"/>
+  </path>
+  
+  <path id="tanks_po.module.classpath">
+    <path refid="${module.jdk.classpath.tanks_po}"/>
+    <pathelement location="${tanks_po.output.dir}"/>
+  </path>
+  
+  <path id="tanks_po.runtime.module.classpath">
+    <pathelement location="${tanks_po.testoutput.dir}"/>
+    <pathelement location="${tanks_po.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.tanks_po">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.tanks_po">
+    <patternset refid="excluded.from.module.tanks_po"/>
+  </patternset>
+  
+  <path id="tanks_po.module.sourcepath">
+    <dirset dir="${module.tanks_po.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.tanks_po" depends="compile.module.tanks_po.production,compile.module.tanks_po.tests" description="Compile module Tanks_PO"/>
+  
+  <target name="compile.module.tanks_po.production" depends="register.custom.compilers" description="Compile module Tanks_PO; production classes">
+    <mkdir dir="${tanks_po.output.dir}"/>
+    <javac2 destdir="${tanks_po.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.tanks_po}/javac">
+      <compilerarg line="${compiler.args.tanks_po}"/>
+      <bootclasspath refid="tanks_po.module.bootclasspath"/>
+      <classpath refid="tanks_po.module.production.classpath"/>
+      <src refid="tanks_po.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.tanks_po"/>
+    </javac2>
+    
+    <copy todir="${tanks_po.output.dir}">
+      <fileset dir="${module.tanks_po.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.tanks_po.tests" depends="register.custom.compilers,compile.module.tanks_po.production" description="compile module Tanks_PO; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.tanks_po" description="cleanup module">
+    <delete dir="${tanks_po.output.dir}"/>
+    <delete dir="${tanks_po.testoutput.dir}"/>
+  </target>
+</project>
