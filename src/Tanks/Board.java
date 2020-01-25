@@ -43,6 +43,10 @@ public class Board {
 
     }
 
+    public GridPane getGameBoard() {
+        return gameBoard;
+    }
+
     public class BoardGUI_ {
 
         public GridPane createBoard() {

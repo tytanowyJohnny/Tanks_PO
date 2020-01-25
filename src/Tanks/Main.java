@@ -14,11 +14,12 @@ public class Main extends Application {
     public static final String ACTION_makeMove = "make_move";
     public static final String ACTION_playerKilled = "player_killed";
 
-    public static int userSelectedTank;
+    public static int userSelectedTank = -1;
     public static int isHost = 0;
     public static Player localPlayer = null;
 
     public static Board mainBoard;
+    public static lobbyWindowController lobbyWindowController;
 
     public static ClientTCP_Listener clientConnection;
 

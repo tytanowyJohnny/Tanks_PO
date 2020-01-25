@@ -16,6 +16,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
@@ -67,27 +68,67 @@ public class newGameController implements Initializable {
 
         try {
 
-            // Close previous Window
-            Stage mainWindow = (Stage) newGameButton.getScene().getWindow();
-            mainWindow.close();
+            if(Main.userSelectedTank == -1) {
+                showInfoMessage("Musisz wybrać czołg!");
+            } else if(usernameInput.getText().isEmpty()) {
+                showInfoMessage("Musisz wpisać swój nickname!");
+            } else {
 
-            // Open a new one
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("lobbyWindow.fxml"));
-            SplitPane pane = loader.load();
+                // Get X & Y
+                Stage mainWindow = (Stage) newGameButton.getScene().getWindow();
 
-            lobbyWindowController lobbyWindowController = loader.getController();
+                double x = mainWindow.getX();
+                double y = mainWindow.getY();
 
-            lobbyWindowController.addPlayer(usernameInput.getText(), Main.isHost, Main.userSelectedTank);
+                // Close previous Window
+                mainWindow.close();
 
-            Scene newGameScene = new Scene(pane, 800, 550);
-            Stage newGameStage = new Stage();
+                // Open a new one
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("lobbyWindow.fxml"));
+                SplitPane pane = loader.load();
 
-            newGameStage.setTitle("Tanks - Lobby");
-            //primaryStage.setFullScreen(true);
-            newGameStage.setScene(newGameScene);
-            newGameStage.show();
+                Main.lobbyWindowController = loader.getController();
+
+                Main.lobbyWindowController.addPlayer(usernameInput.getText(), Main.isHost, Main.userSelectedTank);
+
+                Scene newGameScene = new Scene(pane, 800, 550);
+                Stage newGameStage = new Stage();
+
+                newGameStage.setTitle("Tanks - Lobby");
+                //primaryStage.setFullScreen(true);
+                newGameStage.setScene(newGameScene);
+                newGameStage.setX(x);
+                newGameStage.setY(y);
+                newGameStage.show();
+            }
 
         } catch (IOException e) {
+
+            e.printStackTrace();
+
+        }
+    }
+
+    private void showInfoMessage(String text) {
+
+        try {
+            // Open a new one
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("infoMessage.fxml"));
+            AnchorPane pane = loader.load();
+
+            infoMessageController infoMessageController = loader.getController();
+
+            infoMessageController.setInfoLabelText(text);
+
+            Scene turnMessageScene = new Scene(pane);
+            Stage turnMessageStage = new Stage();
+
+            turnMessageStage.setTitle("It's time to make a move!");
+
+            turnMessageStage.setScene(turnMessageScene);
+            turnMessageStage.show();
+
+        } catch (Exception e) {
 
             e.printStackTrace();
 

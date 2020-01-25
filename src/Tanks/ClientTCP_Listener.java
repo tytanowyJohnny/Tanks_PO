@@ -85,6 +85,15 @@ public class ClientTCP_Listener {
 
                             Platform.runLater(() -> {
 
+                                // Get X & Y
+                                Stage mainWindow = (Stage) Main.lobbyWindowController.lobbyListView.getScene().getWindow();
+
+                                double x = mainWindow.getX();
+                                double y = mainWindow.getY();
+
+                                // Close
+                                mainWindow.close();
+
                                 // Open a new one
                                 Main.mainBoard = new Board();
 
@@ -103,10 +112,12 @@ public class ClientTCP_Listener {
                                 newGameStage.setTitle("Tanks - Game!");
 
                                 newGameStage.setScene(newGameScene);
+                                newGameStage.setX(x);
+                                newGameStage.setY(y);
                                 newGameStage.show();
 
                                 if(inMessage.getPlayerID() == Main.localPlayer.getPlayerID())
-                                    showTurnMessage("You are first! Start the game by making a move.");
+                                    showInfoMessage("You are first! Start the game by making a move.");
 
                             });
 
@@ -125,7 +136,7 @@ public class ClientTCP_Listener {
 
                                 Platform.runLater(() -> {
 
-                                    showTurnMessage("Now it's your turn! Make a move.");
+                                    showInfoMessage("Now it's your turn! Make a move.");
 
                                 });
 
@@ -136,7 +147,7 @@ public class ClientTCP_Listener {
 
                             Platform.runLater(() -> {
 
-                                showTurnMessage("Player " + inMessage.getPlayer().getPlayerName() + " earned a point!");
+                                showInfoMessage("Player " + inMessage.getPlayer().getPlayerName() + " earned a point!");
 
                                 Main.mainBoard.resetBoard();
                             });
@@ -160,9 +171,16 @@ public class ClientTCP_Listener {
         messageHandling.start();
     }
 
-    private void showTurnMessage(String text) {
+    private void showInfoMessage(String text) {
 
         try {
+
+            // Get X & Y
+            Stage mainWindow = (Stage) Main.mainBoard.getGameBoard().getScene().getWindow();
+
+            double x = mainWindow.getX();
+            double y = mainWindow.getY();
+
             // Open a new one
             FXMLLoader loader = new FXMLLoader(getClass().getResource("infoMessage.fxml"));
             AnchorPane pane = loader.load();
@@ -177,6 +195,8 @@ public class ClientTCP_Listener {
             turnMessageStage.setTitle("It's time to make a move!");
 
             turnMessageStage.setScene(turnMessageScene);
+            turnMessageStage.setX(x + 5);
+            turnMessageStage.setY(y + 5);
             turnMessageStage.show();
 
         } catch (Exception e) {

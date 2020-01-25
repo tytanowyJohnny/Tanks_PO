@@ -25,8 +25,13 @@ public class mainController {
 
             Main.isHost = 1;
 
-            // Close previous Window
+            // Get X & Y
             Stage mainWindow = (Stage) exitGameButton.getScene().getWindow();
+
+            double x = mainWindow.getX();
+            double y = mainWindow.getY();
+
+            // Close previous Window
             mainWindow.close();
 
             // Open a new one
@@ -40,6 +45,8 @@ public class mainController {
             newGameStage.setTitle("Tanks - Setup a new game!");
             //primaryStage.setFullScreen(true);
             newGameStage.setScene(newGameScene);
+            newGameStage.setX(x);
+            newGameStage.setY(y);
             newGameStage.show();
 
         } catch (IOException e) {
@@ -56,8 +63,13 @@ public class mainController {
 
             Main.isHost = 0;
 
-            // Close previous Window
+            // Get X & Y
             Stage mainWindow = (Stage) exitGameButton.getScene().getWindow();
+
+            double x = mainWindow.getX();
+            double y = mainWindow.getY();
+
+            // Close previous Window
             mainWindow.close();
 
             // Open a new one
@@ -71,6 +83,8 @@ public class mainController {
             newGameStage.setTitle("Tanks - Join existing game!");
             //primaryStage.setFullScreen(true);
             newGameStage.setScene(newGameScene);
+            newGameStage.setX(x);
+            newGameStage.setY(y);
             newGameStage.show();
 
         } catch (IOException e) {
