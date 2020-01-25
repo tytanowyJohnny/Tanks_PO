@@ -83,7 +83,7 @@ public class ServerTCP_New {
                             Random randomGenerator = new Random();
                             int rndIndx = randomGenerator.nextInt(playersList.size());
 
-                                activePlayerID = rndIndx;
+                            activePlayerID = rndIndx;
 
                             System.out.println("Active player: " + rndIndx);
 
@@ -107,6 +107,16 @@ public class ServerTCP_New {
 
                             break;
 
+                        case Main.ACTION_playerKilled:
+
+                            System.out.println(inMessage.getPlayer().getPlayerName() + "earned a point!");
+
+                            addPoint(inMessage.getPlayer().getPlayerID());
+
+                            sendToAll(new TCP_Message(Main.ACTION_playerKilled, inMessage.getPlayer()));
+
+                            break;
+
                         default:
                             ////
                             break;
@@ -114,12 +124,23 @@ public class ServerTCP_New {
                     }
 
                 }
-                catch(InterruptedException e){ }
+                catch(InterruptedException e){
+
+                    e.printStackTrace();
+                }
             }
         });
 
         messageHandling.setDaemon(true);
         messageHandling.start();
+    }
+
+    private void addPoint(int playerID) {
+
+        for(Player player : playersList)
+            if(player.getPlayerID() == playerID)
+                player.setPlayerScore(player.getPlayerScore() + 1);
+
     }
 
     private class ConnectionToClient {

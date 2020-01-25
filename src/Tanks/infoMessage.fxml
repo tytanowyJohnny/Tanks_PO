@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="315.0" prefWidth="505.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Tanks.infoMessageController">
+   <children>
+      <Label fx:id="infoLabel" alignment="CENTER" contentDisplay="CENTER" layoutY="89.0" prefHeight="50.0" prefWidth="506.0" text="Now it's your turn! Make a move." textAlignment="CENTER">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Button fx:id="okButton" layoutX="187.0" layoutY="171.0" mnemonicParsing="false" onAction="#handleOKButton" prefHeight="57.0" prefWidth="131.0" text="OK" />
+   </children>
+</AnchorPane>

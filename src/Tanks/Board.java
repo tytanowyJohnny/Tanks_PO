@@ -34,15 +34,16 @@ public class Board {
     private HashMap<Integer, Image> playersTanks = new HashMap<>();
     private HashMap<Integer, Move> playersPos = new HashMap<>();
 
+    private final int BOARD_SIZE_WIDTH = 16;
+    private final int BOARD_SIZE_HEIGHT = 10;
+
+
     public Board() {
 
 
     }
 
     public class BoardGUI_ {
-
-        private final int BOARD_SIZE_WIDTH = 16;
-        private final int BOARD_SIZE_HEIGHT = 10;
 
         public GridPane createBoard() {
 
@@ -97,24 +98,62 @@ public class Board {
 
     }
 
+    public void resetBoard() {
+
+        for (int i = 0; i < BOARD_SIZE_HEIGHT; i++) {
+            for (int j = 0; j < BOARD_SIZE_WIDTH; j++) {
+
+                StackPane pane = (StackPane) getNodeByRowColumnIndex(i, j, gameBoard);
+
+                Rectangle tile = (Rectangle) pane.getChildren().get(0);
+
+                tile.setFill(Color.DARKGREEN);
+                tile.setStroke(Color.BLACK);
+
+                ImageView view = (ImageView) pane.getChildren().get(1);
+
+                if(view.getImage() != null)
+                    view.setImage(null);
+
+                for(int k = 0; k< playersTanks.size(); k++)
+                    setStartPos(k);
+
+            }
+        }
+
+    }
+
 
     public void makeMove(ImageView image, StackPane mStackPane) {
 
         // Check of move can be done
-        if(checkMove(Main.localPlayer, GridPane.getRowIndex(mStackPane), GridPane.getColumnIndex(mStackPane)))
+        if(checkMove(Main.localPlayer, GridPane.getRowIndex(mStackPane), GridPane.getColumnIndex(mStackPane)) == 0)
             Main.clientConnection.send(new TCP_Message(Main.ACTION_makeMove, Main.localPlayer, new Move(GridPane.getRowIndex(mStackPane), GridPane.getColumnIndex(mStackPane))));
+        else if(checkMove(Main.localPlayer, GridPane.getRowIndex(mStackPane), GridPane.getColumnIndex(mStackPane)) == 1)
+            Main.clientConnection.send(new TCP_Message(Main.ACTION_playerKilled, Main.localPlayer));
 
     }
 
-    private boolean checkMove(Player player, int rowX, int colY) {
+    private int checkMove(Player player, int rowX, int colY) {
 
+        // First check if move made on allowed tile
         if((rowX == playersPos.get(player.getPlayerID()).getX() - 2 || rowX == playersPos.get(player.getPlayerID()).getX() +2) && colY == playersPos.get(player.getPlayerID()).getY() ||
                 (colY == playersPos.get(player.getPlayerID()).getY() - 2 || colY == playersPos.get(player.getPlayerID()).getY() + 2) && rowX == playersPos.get(player.getPlayerID()).getX()) {
 
-            return true;
+            // Second, check if player killed other player
+            // get node
+            StackPane node = (StackPane) getNodeByRowColumnIndex(rowX, colY, gameBoard);
+            ImageView view = (ImageView) node.getChildren().get(1);
+
+            if(view.getImage() != null) {
+                System.out.println("In checkMove() - killed player!");
+                return 1; // killed other player
+            }
+
+            return 0; // normal move
         }
 
-        return false;
+        return -1; // bad move
 
     }
 

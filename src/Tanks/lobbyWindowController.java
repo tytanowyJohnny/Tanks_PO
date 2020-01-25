@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SplitPane;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -67,8 +68,34 @@ public class lobbyWindowController implements Initializable {
     @FXML
     protected void handleLobbyStartButton(ActionEvent ae) {
 
-        // Send information that game has been started
-        Main.clientConnection.send(new TCP_Message(Main.ACTION_startGame));
+        if(items.size() < 2) {
+
+            try {
+                // Open a new one
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("infoMessage.fxml"));
+                AnchorPane pane = loader.load();
+
+                infoMessageController infoMessageController = loader.getController();
+
+                infoMessageController.setInfoLabelText("Brak wystarczającej ilości graczy do rozpoczęcia gry!");
+
+                Scene turnMessageScene = new Scene(pane);
+                Stage turnMessageStage = new Stage();
+
+                turnMessageStage.setTitle("It's time to make a move!");
+
+                turnMessageStage.setScene(turnMessageScene);
+                turnMessageStage.show();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        } else {
+
+            // Send information that game has been started
+            Main.clientConnection.send(new TCP_Message(Main.ACTION_startGame));
+        }
 
         //Stage.getWindows().stream().filter(Window::isShowing).close();
 

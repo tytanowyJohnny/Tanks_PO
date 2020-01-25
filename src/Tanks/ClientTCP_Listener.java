@@ -1,9 +1,12 @@
 package Tanks;
 
 import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -94,15 +97,16 @@ public class ClientTCP_Listener {
                                 for(Player player : this.players)
                                     Main.mainBoard.setStartPos(player.getPlayerID());
 
-
-
                                 Scene newGameScene = new Scene(pane, 800, 540);
                                 Stage newGameStage = new Stage();
 
                                 newGameStage.setTitle("Tanks - Game!");
-                                //primaryStage.setFullScreen(true);
+
                                 newGameStage.setScene(newGameScene);
                                 newGameStage.show();
+
+                                if(inMessage.getPlayerID() == Main.localPlayer.getPlayerID())
+                                    showTurnMessage("You are first! Start the game by making a move.");
 
                             });
 
@@ -116,6 +120,26 @@ public class ClientTCP_Listener {
                                 Main.mainBoard.addPlayerTank(inMessage.getPlayer().getPlayerID(), inMessage.getPlayer().getPlayerTank());
 
                             Main.mainBoard.makeMoveXY(inMessage.getPlayer(), playerMove.getX(), playerMove.getY());
+
+                            if(inMessage.getPlayer().getPlayerID() != Main.localPlayer.getPlayerID()) {
+
+                                Platform.runLater(() -> {
+
+                                    showTurnMessage("Now it's your turn! Make a move.");
+
+                                });
+
+                            }
+                            break;
+
+                        case Main.ACTION_playerKilled:
+
+                            Platform.runLater(() -> {
+
+                                showTurnMessage("Player " + inMessage.getPlayer().getPlayerName() + " earned a point!");
+
+                                Main.mainBoard.resetBoard();
+                            });
 
                             break;
 
@@ -134,6 +158,32 @@ public class ClientTCP_Listener {
 
         messageHandling.setDaemon(true);
         messageHandling.start();
+    }
+
+    private void showTurnMessage(String text) {
+
+        try {
+            // Open a new one
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("infoMessage.fxml"));
+            AnchorPane pane = loader.load();
+
+            infoMessageController infoMessageController = loader.getController();
+
+            infoMessageController.setInfoLabelText(text);
+
+            Scene turnMessageScene = new Scene(pane);
+            Stage turnMessageStage = new Stage();
+
+            turnMessageStage.setTitle("It's time to make a move!");
+
+            turnMessageStage.setScene(turnMessageScene);
+            turnMessageStage.show();
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        }
     }
 
     private class ConnectionToServer {

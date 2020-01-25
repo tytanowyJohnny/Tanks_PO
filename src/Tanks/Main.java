@@ -12,6 +12,7 @@ public class Main extends Application {
     public static final String ACTION_addPlayer = "add_player";
     public static final String ACTION_startGame = "start_game";
     public static final String ACTION_makeMove = "make_move";
+    public static final String ACTION_playerKilled = "player_killed";
 
     public static int userSelectedTank;
     public static int isHost = 0;
