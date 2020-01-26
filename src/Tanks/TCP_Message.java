@@ -55,6 +55,12 @@ public class TCP_Message implements Serializable {
         this.action = mAction;
     }
 
+    public TCP_Message(String mAction, String mPayload) {
+
+        this.action = mAction;
+        this.payload = mPayload;
+    }
+
     public TCP_Message(String mAction, String mPlayerUsername, int mPlayerHost, int mPlayerTank) {
 
         this.action = mAction;

@@ -7,12 +7,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.sql.Connection;
+import java.sql.Statement;
+
 public class Main extends Application {
 
     public static final String ACTION_addPlayer = "add_player";
     public static final String ACTION_startGame = "start_game";
     public static final String ACTION_makeMove = "make_move";
     public static final String ACTION_playerKilled = "player_killed";
+    public static final String ACTION_endGame = "end_game";
 
     public static int userSelectedTank = -1;
     public static int isHost = 0;
@@ -34,8 +38,8 @@ public class Main extends Application {
         primaryStage.setScene(mainScene);
         primaryStage.show();
 
-    }
 
+    }
 
     public static void main(String[] args) {
         launch(args);

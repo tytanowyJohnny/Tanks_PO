@@ -19,6 +19,15 @@ public class Player implements Serializable {
         this.isHost = mIsHost;
     }
 
+    public Player(int mPlayerID, String mPlayerName, int mPlayerTank, int mIsHost, int mScore) {
+
+        this.playerName = mPlayerName;
+        this.playerID = mPlayerID;
+        this.playerTank = mPlayerTank;
+        this.isHost = mIsHost;
+        this.playerScore = mScore;
+    }
+
     public int isHost() {
         return isHost;
     }

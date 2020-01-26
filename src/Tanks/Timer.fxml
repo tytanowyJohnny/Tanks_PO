@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="188.0" prefWidth="340.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Tanks.timerController">
+   <children>
+      <Label fx:id="clockLabel" alignment="CENTER" layoutX="35.0" layoutY="98.0" prefHeight="61.0" prefWidth="271.0" text="Label">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="54.0" layoutY="26.0" prefHeight="72.0" prefWidth="233.0" text="Time left">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

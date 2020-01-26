@@ -5,9 +5,17 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.sql.Connection;
+import java.sql.Statement;
+import java.time.chrono.HijrahDate;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class ServerTCP_New {
@@ -16,12 +24,13 @@ public class ServerTCP_New {
     public static int playerID = -1;
 
     private int activePlayerID = -1;
+    private int gameID = new Random().nextInt(1000);
 
     private ArrayList<ConnectionToClient> clientList;
     private LinkedBlockingQueue<Object> messages;
     private ServerSocket serverSocket;
 
-    private ReentrantLock lock = new ReentrantLock();
+    //private ReentrantLock lock = new ReentrantLock();
 
     public ServerTCP_New(int port) throws IOException {
 
@@ -88,6 +97,28 @@ public class ServerTCP_New {
                             System.out.println("Active player: " + rndIndx);
 
                             sendToAll(new TCP_Message(Main.ACTION_startGame, rndIndx));
+
+                            // Schedule end of game
+                            ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+
+                            Runnable endGame = () -> {
+                                sendToAll(new TCP_Message(Main.ACTION_endGame, playersToString()));
+                                executor.shutdown();
+
+                                // Save results to mysql database
+                                Connection connection = JDBC_Helper.connect();
+                                Statement statement = JDBC_Helper.statement(connection);
+
+                                JDBC_Helper.executeUpdate(statement, "USE tanks;");
+
+                                for(Player player : playersList)
+                                    JDBC_Helper.executeUpdate(statement, "INSERT INTO `scoreboard` (player, gameId, score) VALUES ('" + player.getPlayerName() + "', " + gameID + ", " + player.getPlayerScore() + ")");
+
+                                JDBC_Helper.close(connection, statement);
+                            };
+
+                            executor.schedule(endGame, 108, TimeUnit.SECONDS);
+
                             break;
 
                         case Main.ACTION_makeMove:
@@ -209,7 +240,8 @@ public class ServerTCP_New {
             temPlayerString.append(playersList.get(i).getPlayerID()).append(',')
                     .append(playersList.get(i).getPlayerName()).append(',')
                     .append(playersList.get(i).getPlayerTank()).append(',')
-                    .append(playersList.get(i).isHost());
+                    .append(playersList.get(i).isHost()).append(',')
+                    .append(playersList.get(i).getPlayerScore());
 
             if(i!=0)
                 temp.append(";").append(temPlayerString);

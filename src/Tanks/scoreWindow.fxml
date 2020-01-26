@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+
+<AnchorPane prefHeight="375.0" prefWidth="465.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Tanks.scoreWindowController">
+   <children>
+      <ListView fx:id="scoreListView" layoutX="137.0" layoutY="107.0" prefHeight="200.0" prefWidth="200.0" />
+      <Label layoutX="67.0" layoutY="14.0" text="Game Score">
+         <font>
+            <Font size="64.0" />
+         </font>
+      </Label>
+      <Button onAction="#handleScoreButton" fx:id="scoreButton" layoutX="211.0" layoutY="336.0" mnemonicParsing="false" text="OK" />
+   </children>
+</AnchorPane>
