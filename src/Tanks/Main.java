@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import javax.swing.plaf.nimbus.State;
 import java.sql.Connection;
 import java.sql.Statement;
 
@@ -29,6 +30,24 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+
+        // Create database for storing results
+
+        Connection conn = JDBC_Helper.connect();
+        Statement statement = JDBC_Helper.statement(conn);
+
+        // Create database if not exists
+        JDBC_Helper.executeUpdate(statement, "CREATE DATABASE IF NOT EXISTS `tanks`");
+        JDBC_Helper.executeUpdate(statement, "USE `tanks`");
+        // Create table if not exists
+        JDBC_Helper.executeUpdate(statement, "CREATE TABLE `scoreboard` (\n" +
+                "  `id` int(11) NOT NULL,\n" +
+                "  `player` varchar(20) COLLATE utf8_unicode_ci NOT NULL,\n" +
+                "  `gameId` int(11) NOT NULL,\n" +
+                "  `score` int(11) NOT NULL\n" +
+                ") ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;");
+
+        JDBC_Helper.close(conn, statement);
 
         Parent root = FXMLLoader.load(getClass().getResource("startWindow.fxml"));
         Scene mainScene = new Scene(root, 800, 550);
